@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact — Sam Hill Signature Trail</title>
-    <meta name="description" content="Get in touch with Sam Hill Signature Trail for world-class mountain bike trail design, consultancy, and construction services.">
+    <title>Work — Sam Hill Signature Trail</title>
+    <meta name="description" content="Featured projects and collaborations by Sam Hill Signature Trail. World-class trails designed and built by a champion, for every rider.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -175,6 +175,8 @@
         }
         .nav-links a:hover { color: #f5f5f0; }
         .nav-links a:hover::after { width: 100%; }
+        .nav-links a.active { color: #c8ff00; }
+        .nav-links a.active::after { width: 100%; }
         .nav-cta {
             font-family: 'Space Mono', monospace;
             font-size: 0.75rem;
@@ -232,27 +234,68 @@
         }
         .mobile-nav a:hover { color: #c8ff00; }
 
-        /* ===== SCROLL REVEAL ===== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+        /* ===== PAGE HERO ===== */
+        .page-hero {
+            position: relative;
+            height: 50vh;
+            min-height: 400px;
+            display: flex;
+            align-items: flex-end;
+            padding: 4rem 3rem;
+            overflow: hidden;
         }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-left {
-            opacity: 0;
-            transform: translateX(-40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+        .page-hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/martins_w3a7948.jpg') center center / cover no-repeat;
         }
-        .reveal-left.visible { opacity: 1; transform: translateX(0); }
-        .reveal-right {
-            opacity: 0;
-            transform: translateX(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+        .page-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.6) 40%, rgba(10,10,10,0.4) 100%);
         }
-        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+        .page-hero-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #c8ff00;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .page-hero-label.revealed { opacity: 1; transform: translateY(0); transition: all 0.6s ease 0.3s; }
+        .page-hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .page-hero-title span {
+            display: inline-block;
+            transform: translateY(110%);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .page-hero-title span.revealed { transform: translateY(0); }
+        .page-hero-subtitle {
+            font-size: 1.1rem;
+            color: #999;
+            max-width: 600px;
+            line-height: 1.7;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .page-hero-subtitle.revealed { opacity: 1; transform: translateY(0); transition: all 0.6s ease 0.8s; }
 
         /* ===== SECTION COMMON ===== */
+        section { padding: 8rem 3rem; position: relative; }
         .section-label {
             font-family: 'Space Mono', monospace;
             font-size: 0.7rem;
@@ -266,179 +309,151 @@
             font-size: clamp(2.5rem, 5vw, 4rem);
             letter-spacing: 0.02em;
             line-height: 1.05;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
         }
 
-        /* ===== CONTACT HERO ===== */
-        .contact-hero {
-            position: relative;
-            min-height: 40vh;
-            display: flex;
-            align-items: flex-end;
-            padding: 4rem 3rem;
-            overflow: hidden;
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
-        .contact-hero-bg {
-            position: absolute;
-            inset: 0;
-            background: url('https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/ad413d4f-1be7-4151-b9a3-8062c296083c_1_102_o.jpeg') center center / cover no-repeat;
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .contact-hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, #0a0a0a 0%, rgba(10,10,10,0.85) 40%, rgba(10,10,10,0.7) 100%);
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
-        .contact-hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 700px;
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
-        .contact-hero-content .section-label {
-            margin-bottom: 1.5rem;
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
-        .contact-hero-content .section-title {
-            margin-bottom: 1rem;
-        }
-        .contact-hero-subtitle {
-            font-size: 1.1rem;
-            color: #999;
-            line-height: 1.7;
-            max-width: 550px;
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
-        /* ===== CONTACT CONTENT ===== */
-        .contact-section {
-            padding: 6rem 3rem;
-            background: #0a0a0a;
-        }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+        /* ===== WORK GALLERY ===== */
+        .work-gallery {
             max-width: 1200px;
             margin: 0 auto;
         }
-
-        /* Contact Info */
-        .contact-info h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        .contact-info > p {
-            font-size: 1rem;
-            color: #6b6b6b;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-        .contact-detail {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        .contact-detail-icon {
-            width: 40px; height: 40px;
-            background: #1a1a1a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-        }
-        .contact-detail-icon svg { width: 18px; height: 18px; fill: #c8ff00; }
-        .contact-detail span,
-        .contact-detail a {
-            font-size: 0.9rem;
-            color: #999;
-            transition: color 0.3s ease;
-        }
-        .contact-detail a:hover { color: #c8ff00; }
-
-        .follow-us {
-            margin-top: 2.5rem;
-            padding-top: 2rem;
-            border-top: 1px solid #222;
-        }
-        .follow-us h4 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.3rem;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
-        }
-        .follow-us-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-        .follow-us-links a {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            color: #6b6b6b;
-            transition: color 0.3s ease;
-        }
-        .follow-us-links a:hover { color: #c8ff00; }
-
-        /* Contact Form */
-        .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
-        .form-row {
+        .work-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            gap: 2.5rem;
+            margin-top: 3rem;
         }
-        .form-group { position: relative; }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .project-card {
+            background: #111111;
+            clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+            overflow: hidden;
+            transition: transform 0.4s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-4px);
+        }
+        .project-card-image {
+            overflow: hidden;
+            height: 300px;
+        }
+        .project-card-image img {
             width: 100%;
-            background: #1a1a1a;
-            border: 1px solid #222;
-            color: #f5f5f0;
-            padding: 1.2rem 1rem 0.6rem;
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.3s ease;
-            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
         }
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus { border-color: #c8ff00; }
-        .form-group label {
-            position: absolute;
-            top: 50%; left: 1rem;
-            transform: translateY(-50%);
+        .project-card:hover .project-card-image img {
+            transform: scale(1.08);
+        }
+        .project-card-content {
+            padding: 2rem;
+        }
+        .project-card-category {
             font-family: 'Space Mono', monospace;
             font-size: 0.7rem;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
+            color: #c8ff00;
+            margin-bottom: 0.75rem;
+        }
+        .project-card-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 0.03em;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .project-card-desc {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
             color: #6b6b6b;
-            pointer-events: none;
-            transition: all 0.3s ease;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
         }
-        .form-group textarea ~ label {
-            top: 1.2rem;
-            transform: none;
+        .project-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
-        .form-group input:focus ~ label,
-        .form-group input:not(:placeholder-shown) ~ label,
-        .form-group select:focus ~ label,
-        .form-group select:valid ~ label {
-            top: 0.5rem;
-            transform: none;
-            font-size: 0.6rem;
-            color: #c8ff00;
+        .project-tag {
+            display: inline-block;
+            background: #1a1a1a;
+            border: 1px solid #222;
+            padding: 0.3rem 0.8rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #999;
+            clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
         }
-        .form-group textarea:focus ~ label,
-        .form-group textarea:not(:placeholder-shown) ~ label {
-            top: 0.4rem;
-            font-size: 0.6rem;
-            color: #c8ff00;
-        }
-        .form-group textarea { min-height: 140px; resize: vertical; }
-        .form-group select { appearance: none; -webkit-appearance: none; }
-        .form-group select option { background: #1a1a1a; color: #f5f5f0; }
 
-        .submit-btn {
+        /* ===== PROCESS TEASER ===== */
+        .process-teaser {
+            background: #111111;
+        }
+        .process-teaser-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .process-teaser-inner .section-title {
+            margin-bottom: 1.5rem;
+        }
+        .process-teaser-brief {
+            color: #999;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            background: #0a0a0a;
+            text-align: center;
+        }
+        .cta-section .section-title {
+            margin-bottom: 1rem;
+        }
+        .cta-subtitle {
+            color: #999;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            max-width: 550px;
+            margin: 0 auto 2.5rem;
+        }
+        .cta-btn {
+            display: inline-block;
             font-family: 'Space Mono', monospace;
             font-size: 0.8rem;
             letter-spacing: 0.15em;
@@ -448,53 +463,9 @@
             color: #0a0a0a;
             font-weight: 700;
             clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-            transition: all 0.3s ease;
-            align-self: flex-start;
-            position: relative;
-            overflow: hidden;
+            transition: background 0.3s ease;
         }
-        .submit-btn:hover { background: #d4ff33; }
-        .submit-btn.sent {
-            background: #c8ff00;
-            pointer-events: none;
-        }
-
-        /* ===== QUOTE SECTION ===== */
-        .quote-section {
-            padding: 8rem 3rem;
-            text-align: center;
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .quote-mark {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 15rem;
-            color: #1a1a1a;
-            line-height: 0.5;
-            position: absolute;
-            top: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            user-select: none;
-        }
-        .quote-text {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(1.3rem, 3vw, 2rem);
-            font-weight: 300;
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 2rem;
-        }
-        .quote-text em { font-style: italic; color: #c8ff00; }
-        .quote-author {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #6b6b6b;
-        }
+        .cta-btn:hover { background: #d4ff33; }
 
         /* ===== FOOTER ===== */
         .footer {
@@ -596,22 +567,20 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
+            section { padding: 5rem 1.5rem; }
             .nav { padding: 1rem 1.5rem; }
             .nav-links { display: none; }
             .hamburger { display: flex; }
-            .contact-hero { padding: 3rem 1.5rem; min-height: 35vh; }
-            .contact-section { padding: 4rem 1.5rem; }
-            .contact-grid { grid-template-columns: 1fr; }
-            .form-row { grid-template-columns: 1fr; }
-            .quote-section { padding: 5rem 1.5rem; }
-            .quote-mark { font-size: 8rem; }
-            .footer { padding: 4rem 1.5rem 2rem; }
+            .page-hero { padding: 3rem 1.5rem; min-height: 350px; }
+            .work-grid { grid-template-columns: 1fr; }
+            .project-card-image { height: 250px; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
             body { cursor: auto; }
             .cursor-dot, .cursor-ring { display: none; }
         }
         @media (max-width: 480px) {
             .footer-grid { grid-template-columns: 1fr; }
+            .page-hero-title { font-size: clamp(2.5rem, 10vw, 3.5rem); }
         }
     </style>
 </head>
@@ -644,7 +613,7 @@
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="services.html">Services</a>
-            <a href="work.html">Work</a>
+            <a href="work.html" class="active">Work</a>
             <a href="blog.html">Blog</a>
             <a href="contact.html" class="nav-cta">Get in Touch</a>
         </div>
@@ -663,97 +632,140 @@
         <a href="contact.html" class="mobile-nav-link">Contact</a>
     </div>
 
-    <!-- Contact Hero -->
-    <section class="contact-hero">
-        <div class="contact-hero-bg"></div>
-        <div class="contact-hero-overlay"></div>
-        <div class="contact-hero-content reveal">
-            <div class="section-label">Contact</div>
-            <h1 class="section-title">Let's Build Something Extraordinary</h1>
-            <p class="contact-hero-subtitle">Ready to create world-class trails? Get in touch to discuss your project.</p>
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-bg"></div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-content">
+            <div class="page-hero-label" id="heroLabel">Our Portfolio</div>
+            <h1 class="page-hero-title"><span id="heroTitle">Featured Projects</span></h1>
+            <p class="page-hero-subtitle" id="heroSubtitle">World-class trails designed and built by a champion, for every rider.</p>
         </div>
     </section>
 
-    <!-- Contact Content -->
-    <section class="contact-section">
-        <div class="contact-grid">
-            <!-- Left Column — Contact Info -->
-            <div class="contact-info reveal-left">
-                <h3>Get in Touch</h3>
-                <p>Whether you're a council planning a new trail network, a bike park looking to expand, or a community group with a vision — we'd love to hear from you. Reach out and let's start the conversation.</p>
+    <!-- Work Gallery Section -->
+    <section>
+        <div class="work-gallery">
+            <span class="section-label reveal">Our Work</span>
+            <h2 class="section-title reveal">Projects & Collaborations</h2>
 
-                <div class="contact-detail">
-                    <div class="contact-detail-icon">
-                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <div class="work-grid">
+                <!-- Project 1 -->
+                <div class="project-card reveal">
+                    <div class="project-card-image">
+                        <img src="https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/ad413d4f-1be7-4151-b9a3-8062c296083c_1_102_o.jpeg" alt="Cool Running Downhill trail">
                     </div>
-                    <a href="mailto:info@samhillsignaturetrail.com.au">info@samhillsignaturetrail.com.au</a>
-                </div>
-                <div class="contact-detail">
-                    <div class="contact-detail-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    <div class="project-card-content">
+                        <div class="project-card-category">Signature Trail</div>
+                        <h3 class="project-card-title">Cool Running Downhill</h3>
+                        <p class="project-card-desc">A flagship downhill trail designed to challenge experienced riders while remaining approachable. Featuring technical rock gardens, flowing berms, and natural features that work with the terrain.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Trail Design</span>
+                            <span class="project-tag">Construction</span>
+                        </div>
                     </div>
-                    <a href="https://samhillsignaturetrail.com.au" target="_blank" rel="noopener">samhillsignaturetrail.com.au</a>
-                </div>
-                <div class="contact-detail">
-                    <div class="contact-detail-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                    </div>
-                    <a href="https://www.instagram.com/samhill_signaturetrail/" target="_blank" rel="noopener">@samhill_signaturetrail</a>
                 </div>
 
-                <div class="follow-us">
-                    <h4>Follow Us</h4>
-                    <div class="follow-us-links">
-                        <a href="https://www.instagram.com/samhill_signaturetrail/" target="_blank" rel="noopener">@samhill_signaturetrail</a>
-                        <a href="https://www.instagram.com/samhill13/" target="_blank" rel="noopener">@samhill13</a>
-                        <a href="https://www.instagram.com/woodland_trails_and_landscape/" target="_blank" rel="noopener">@woodland_trails_and_landscape</a>
+                <!-- Project 2 -->
+                <div class="project-card reveal">
+                    <div class="project-card-image">
+                        <img src="https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/photo-2024-08-31-12-37-41-1.jpg" alt="Bloody Mary Trail">
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-category">Community Trail</div>
+                        <h3 class="project-card-title">Bloody Mary Trail</h3>
+                        <p class="project-card-desc">A community-driven trail project built in partnership with local council and riding clubs. Designed for intermediate riders with progressive features that encourage skill development.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Consultancy</span>
+                            <span class="project-tag">Trail Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card reveal">
+                    <div class="project-card-image">
+                        <img src="https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/photo-2024-08-31-12-47-26.jpg" alt="Community Trail Network">
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-category">Network Planning</div>
+                        <h3 class="project-card-title">Community Trail Network</h3>
+                        <p class="project-card-desc">Comprehensive trail network planning for a regional mountain bike destination. From feasibility study through to detailed design of 15+ kilometres of interconnected trails.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Consultancy</span>
+                            <span class="project-tag">Park Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card reveal">
+                    <div class="project-card-image">
+                        <img src="https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/fw17_x2_4857.jpg" alt="Championship Race Track">
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-category">Race Trail</div>
+                        <h3 class="project-card-title">Championship Race Track</h3>
+                        <p class="project-card-desc">A competition-grade race course designed with input from Sam's two decades of World Championship experience. Built to international racing standards with spectator-friendly viewing areas.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Trail Design</span>
+                            <span class="project-tag">Construction Supervision</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card reveal">
+                    <div class="project-card-image">
+                        <img src="https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/ewsmadeira19_m1_9583.jpg" alt="Enduro Trail System">
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-category">Trail Network</div>
+                        <h3 class="project-card-title">Enduro Trail System</h3>
+                        <p class="project-card-desc">A multi-stage enduro trail system featuring varied terrain and natural features. Each stage designed to test different riding skills while maintaining flow and ridability.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Trail Design</span>
+                            <span class="project-tag">Park Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card reveal">
+                    <div class="project-card-image">
+                        <img src="https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/ewszermatt19_m1_9281.jpg" alt="Bike Park Development">
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-card-category">Park Design</div>
+                        <h3 class="project-card-title">Bike Park Development</h3>
+                        <p class="project-card-desc">Full-scale bike park development including gravity trails, flow trails, skills areas, and a pump track. Designed as an integrated destination for riders of all abilities.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Consultancy</span>
+                            <span class="project-tag">Park Design</span>
+                            <span class="project-tag">Construction</span>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Right Column — Contact Form -->
-            <form class="contact-form reveal-right" id="contactForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="text" id="firstName" placeholder=" " required>
-                        <label for="firstName">First Name</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="lastName" placeholder=" " required>
-                        <label for="lastName">Last Name</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="email" id="email" placeholder=" " required>
-                    <label for="email">Email</label>
-                </div>
-                <div class="form-group">
-                    <select id="service" required>
-                        <option value="" disabled selected hidden></option>
-                        <option value="consultancy">Consultancy</option>
-                        <option value="trail-design">Trail Concepts &amp; Design</option>
-                        <option value="park-design">Park Design</option>
-                        <option value="construction">Construction Supervision</option>
-                        <option value="other">Other</option>
-                    </select>
-                    <label for="service">Service Interest</label>
-                </div>
-                <div class="form-group">
-                    <textarea id="message" placeholder=" " rows="5"></textarea>
-                    <label for="message">Message</label>
-                </div>
-                <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
-            </form>
         </div>
     </section>
 
-    <!-- Quote Section -->
-    <section>
-        <div class="quote-section reveal">
-            <div class="quote-mark">&ldquo;</div>
-            <p class="quote-text">The best trails don't fight the terrain — they <em>dance with it</em>.</p>
-            <span class="quote-author">— Sam Hill</span>
+    <!-- Process Teaser Section -->
+    <section class="process-teaser">
+        <div class="process-teaser-inner">
+            <span class="section-label reveal">How We Work</span>
+            <h2 class="section-title reveal">Our Process</h2>
+            <p class="process-teaser-brief reveal">Every project follows our proven four-step methodology: Discovery, Concept Design, Detailed Design, and Build & Deliver.</p>
+            <a href="services.html" class="cta-btn reveal">Learn More</a>
         </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <span class="section-label reveal">Let's Talk</span>
+        <h2 class="section-title reveal">Have a Project in Mind?</h2>
+        <p class="cta-subtitle reveal">Whether it's a single trail or a complete network, we'd love to hear about it.</p>
+        <a href="contact.html" class="cta-btn reveal">Get in Touch</a>
     </section>
 
     <!-- Footer -->
@@ -770,10 +782,10 @@
                         <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                     </a>
                     <a href="https://www.instagram.com/samhill13/" target="_blank" rel="noopener" aria-label="Sam Hill Personal Instagram">
-                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                     </a>
                     <a href="https://www.instagram.com/woodland_trails_and_landscape/" target="_blank" rel="noopener" aria-label="Woodland Trails Instagram">
-                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
                     </a>
                 </div>
             </div>
@@ -804,7 +816,7 @@
                     <li><a href="https://www.instagram.com/samhill13/" target="_blank" rel="noopener">@samhill13</a></li>
                     <li><a href="https://www.instagram.com/woodland_trails_and_landscape/" target="_blank" rel="noopener">@woodland_trails</a></li>
                     <li><a href="mailto:info@samhillsignaturetrail.com.au">Email Us</a></li>
-                    <li><a href="https://samhillsignaturetrail.com.au" target="_blank" rel="noopener">Blog</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                 </ul>
             </div>
         </div>
@@ -838,9 +850,17 @@
             setTimeout(() => {
                 document.getElementById('loader').classList.add('hidden');
                 document.body.style.overflow = '';
+                revealHero();
             }, 2400);
             document.body.style.overflow = 'hidden';
         })();
+
+        // ===== HERO REVEAL =====
+        function revealHero() {
+            setTimeout(() => document.getElementById('heroLabel').classList.add('revealed'), 200);
+            setTimeout(() => document.getElementById('heroTitle').classList.add('revealed'), 400);
+            setTimeout(() => document.getElementById('heroSubtitle').classList.add('revealed'), 700);
+        }
 
         // ===== CUSTOM CURSOR =====
         const dot = document.querySelector('.cursor-dot');
@@ -864,7 +884,7 @@
         animateRing();
 
         // Hover effect on interactive elements
-        document.querySelectorAll('a, button, input, textarea, select').forEach(el => {
+        document.querySelectorAll('a, button, .project-card').forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
@@ -910,22 +930,6 @@
         });
         backToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // ===== CONTACT FORM =====
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.textContent = 'Sending...';
-            btn.classList.add('sent');
-            setTimeout(() => {
-                btn.textContent = 'Message Sent \u2713';
-                setTimeout(() => {
-                    btn.textContent = 'Send Message';
-                    btn.classList.remove('sent');
-                    this.reset();
-                }, 2500);
-            }, 1500);
         });
     </script>
 </body>
