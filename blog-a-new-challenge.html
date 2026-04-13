@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A New Challenge — Sam Hill Signature Trail</title>
+    <meta name="description" content="A Champion's Perspective on Trail Design — Sam Hill shares his journey from World Championship racing to world-class trail design.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #c8ff00 #111111; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #0a0a0a;
+            color: #f5f5f0;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        ::selection { background: #c8ff00; color: #0a0a0a; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111111; }
+        ::-webkit-scrollbar-thumb { background: #c8ff00; border-radius: 3px; }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
+        button { border: none; background: none; cursor: none; font-family: inherit; }
+        input, textarea, select { font-family: inherit; }
+
+        /* ===== CUSTOM CURSOR ===== */
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background: #c8ff00;
+            border-radius: 50%;
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 10001;
+            transition: transform 0.1s ease;
+        }
+        .cursor-ring {
+            width: 40px; height: 40px;
+            border: 1.5px solid rgba(200, 255, 0, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 10000;
+            transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+        }
+        .cursor-hover .cursor-ring {
+            width: 60px; height: 60px;
+            border-color: rgba(200, 255, 0, 0.8);
+        }
+        .cursor-hover .cursor-dot {
+            transform: scale(2);
+        }
+
+        /* ===== LOADING SCREEN ===== */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            letter-spacing: 0.3em;
+            display: flex;
+            gap: 2px;
+            margin-bottom: 2rem;
+        }
+        .loader-text span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: letterReveal 0.5s forwards;
+        }
+        @keyframes letterReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .loader-bar {
+            width: 200px; height: 2px;
+            background: #222;
+            border-radius: 1px;
+            overflow: hidden;
+        }
+        .loader-bar-fill {
+            height: 100%;
+            background: #c8ff00;
+            width: 0%;
+            animation: loadBar 2s ease-in-out forwards;
+        }
+        @keyframes loadBar {
+            0% { width: 0%; }
+            60% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* ===== FILM GRAIN OVERLAY ===== */
+        .grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.04;
+        }
+
+        /* ===== NAV ===== */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+        }
+        .nav.scrolled {
+            padding: 1rem 3rem;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .nav-logo img {
+            height: 40px;
+            width: auto;
+        }
+        .nav-logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.15em;
+            color: #f5f5f0;
+        }
+        .nav-logo-text .accent { color: #c8ff00; }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #6b6b6b;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: #c8ff00;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: #f5f5f0; }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-cta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.6rem 1.5rem;
+            background: #c8ff00;
+            color: #0a0a0a;
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+            transition: background 0.3s ease;
+            font-weight: 700;
+        }
+        .nav-cta:hover { background: #d4ff33; }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            padding: 0.5rem;
+            z-index: 1002;
+        }
+        .hamburger span {
+            display: block;
+            width: 28px; height: 2px;
+            background: #f5f5f0;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+        /* Mobile Nav Overlay */
+        .mobile-nav {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+        .mobile-nav.active { opacity: 1; visibility: visible; }
+        .mobile-nav a {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.15em;
+            color: #6b6b6b;
+            transition: color 0.3s ease;
+        }
+        .mobile-nav a:hover { color: #c8ff00; }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+        /* ===== ARTICLE HEADER ===== */
+        .article-header {
+            padding: 10rem 3rem 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .article-back {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: #c8ff00;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+        .article-back:hover { color: #d4ff33; }
+        .article-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #c8ff00;
+            margin-bottom: 1rem;
+        }
+        .article-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            letter-spacing: 0.02em;
+            line-height: 1.05;
+            margin-bottom: 1rem;
+        }
+        .article-author {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            color: #6b6b6b;
+        }
+
+        /* ===== FEATURED IMAGE ===== */
+        .article-featured-image {
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 0 3rem;
+        }
+        .article-featured-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+        }
+
+        /* ===== ARTICLE BODY ===== */
+        .article-body {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 0 3rem 4rem;
+        }
+        .article-body p {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            color: #999;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .article-body p strong {
+            color: #f5f5f0;
+            font-weight: 600;
+        }
+        .article-body h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            color: #f5f5f0;
+            letter-spacing: 0.05em;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+        .article-body .inline-image {
+            margin: 2.5rem 0;
+        }
+        .article-body .inline-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+        }
+        .article-body .inline-image figcaption {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: #6b6b6b;
+            letter-spacing: 0.05em;
+            margin-top: 0.75rem;
+            text-align: center;
+        }
+
+        /* ===== POST FOOTER ===== */
+        .post-footer {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 0 3rem 5rem;
+        }
+        .post-footer-divider {
+            width: 100%;
+            height: 1px;
+            background: #222;
+            margin-bottom: 2rem;
+        }
+        .post-footer-share-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #6b6b6b;
+            margin-bottom: 1rem;
+        }
+        .post-footer-share-icons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+        .post-footer-share-icons a {
+            width: 40px; height: 40px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+        }
+        .post-footer-share-icons a:hover { background: #c8ff00; }
+        .post-footer-share-icons a:hover svg { fill: #0a0a0a; }
+        .post-footer-share-icons a svg { width: 18px; height: 18px; fill: #6b6b6b; transition: fill 0.3s ease; }
+        .post-footer-back {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: #c8ff00;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        .post-footer-back:hover { color: #d4ff33; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #0a0a0a;
+            padding: 5rem 3rem 2rem;
+            border-top: 1px solid #1a1a1a;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+        }
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: #6b6b6b;
+            line-height: 1.8;
+            margin: 1rem 0 1.5rem;
+            max-width: 300px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        .footer-social a {
+            width: 40px; height: 40px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+        }
+        .footer-social a:hover { background: #c8ff00; }
+        .footer-social a:hover svg { fill: #0a0a0a; }
+        .footer-social a svg { width: 18px; height: 18px; fill: #6b6b6b; transition: fill 0.3s ease; }
+        .footer-col h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+        .footer-col ul li { margin-bottom: 0.75rem; }
+        .footer-col ul li a {
+            font-size: 0.85rem;
+            color: #6b6b6b;
+            transition: color 0.3s ease;
+        }
+        .footer-col ul li a:hover { color: #c8ff00; }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-bottom span {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            color: #6b6b6b;
+        }
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .footer-legal a {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            color: #6b6b6b;
+            transition: color 0.3s ease;
+        }
+        .footer-legal a:hover { color: #c8ff00; }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem; right: 2rem;
+            width: 48px; height: 48px;
+            background: #c8ff00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #d4ff33; }
+        .back-to-top svg { width: 20px; height: 20px; fill: #0a0a0a; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .article-header { padding: 8rem 1.5rem 2rem; }
+            .article-featured-image { padding: 0 1.5rem; }
+            .article-body { padding: 0 1.5rem 3rem; }
+            .post-footer { padding: 0 1.5rem 4rem; }
+            .footer { padding: 4rem 1.5rem 2rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            body { cursor: auto; }
+            .cursor-dot, .cursor-ring { display: none; }
+        }
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-text" id="loaderText"></div>
+        <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    </div>
+
+    <!-- Film Grain -->
+    <svg class="grain" viewBox="0 0 256 256" preserveAspectRatio="none">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/>
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)" opacity="1"/>
+    </svg>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="sam-hill-signature-trail-website.html" class="nav-logo">
+            <img src="https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/resized-logo-sam-hill-signature-trail-logo-_-primary-color-.png" alt="SHST Logo">
+            <span class="nav-logo-text">SAM HILL <span class="accent">ST</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="sam-hill-signature-trail-website.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+            <a href="contact.html" class="nav-cta">Get in Touch</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="sam-hill-signature-trail-website.html" class="mobile-nav-link">Home</a>
+        <a href="services.html" class="mobile-nav-link">Services</a>
+        <a href="blog.html" class="mobile-nav-link">Blog</a>
+        <a href="contact.html" class="mobile-nav-link">Contact</a>
+    </div>
+
+    <!-- Article Header -->
+    <header class="article-header reveal">
+        <a href="blog.html" class="article-back">&larr; Back to Blog</a>
+        <div class="article-date">2 September 2024</div>
+        <h1 class="article-title">A New Challenge</h1>
+        <div class="article-author">By Sam Hill</div>
+    </header>
+
+    <!-- Featured Image -->
+    <div class="article-featured-image reveal">
+        <img src="https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/ewszermatt19_m1_9281.jpg" alt="Sam Hill racing in Zermatt">
+    </div>
+
+    <!-- Article Body -->
+    <article class="article-body">
+        <h2 class="reveal">A Champion's Perspective on Trail Design</h2>
+        <p class="reveal">After more than two decades competing at the highest levels of mountain biking — from Downhill World Championships to Enduro World Series victories — I've had the privilege of riding trails across every continent. That experience hasn't just shaped me as a racer; it's given me an intimate understanding of what makes a trail truly exceptional.</p>
+        <p class="reveal">Every trail tells a story. The best ones flow naturally with the terrain, challenge riders at every level, and leave you wanting to ride them again. That's the standard I'm bringing to trail design — not just technical proficiency, but the instinct that comes from thousands of runs on the world's most demanding courses.</p>
+
+        <h2 class="reveal">Collaboration with Woodland Trails and Landscapes</h2>
+        <p class="reveal">I'm proud to partner with <strong>Woodland Trails and Landscapes</strong> for the construction side of our projects. Their expertise in sustainable trail building and land management perfectly complements our design philosophy. Together, we deliver trails that are not only thrilling to ride but built to last and respectful of the natural environment.</p>
+
+        <h2 class="reveal">Comprehensive Trail Development Services</h2>
+        <p class="reveal"><strong>Sam Hill Signature Trail</strong> offers a complete suite of trail development services. From initial consultancy and feasibility studies through to detailed design documentation and construction supervision, we guide projects from concept to completion. Whether it's a single signature trail or a complete network, every project receives the same championship-level attention to detail.</p>
+
+        <h2 class="reveal">Understanding the Art of Trail Networks</h2>
+        <p class="reveal">A great trail network is more than a collection of individual trails. It's an ecosystem that caters to every rider — from families experiencing mountain biking for the first time to seasoned racers pushing their limits. Our designs consider progression, flow between trails, environmental impact, and the overall rider journey.</p>
+
+        <figure class="inline-image reveal">
+            <img src="https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/photo-2024-08-31-12-37-41.jpg" alt="Trail construction in progress">
+            <figcaption>Trail construction — blending design with landscape</figcaption>
+        </figure>
+
+        <h2 class="reveal">Built for The Rider, Connected to Nature</h2>
+        <p class="reveal">Every trail we design starts with two questions: How will this feel to ride? And how does it work with the landscape? The best trails don't fight the terrain — they dance with it. Our approach honours the natural contours of the land while creating experiences that keep riders coming back.</p>
+        <p class="reveal">This is a new chapter, but it's built on everything I've learned across 20+ years on the world's biggest stages. I'm excited to bring that experience to communities, bike parks, and trail networks worldwide.</p>
+    </article>
+
+    <!-- Post Footer -->
+    <div class="post-footer">
+        <div class="post-footer-divider"></div>
+        <div class="post-footer-share-label">Share this article</div>
+        <div class="post-footer-share-icons">
+            <a href="https://www.instagram.com/samhill_signaturetrail/" target="_blank" rel="noopener" aria-label="Share on Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/samhill13/" target="_blank" rel="noopener" aria-label="Sam Hill Personal">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/woodland_trails_and_landscape/" target="_blank" rel="noopener" aria-label="Woodland Trails">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+        </div>
+        <a href="blog.html" class="post-footer-back">&larr; Back to Blog</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="sam-hill-signature-trail-website.html" class="nav-logo" style="margin-bottom: 0.5rem; display: inline-flex;">
+                    <img src="https://samhillsignaturetrail.com.au/wp-content/uploads/2024/09/sam-hill-signature-trail-logo-_-primary-color-_-600-x-600-px.png?w=50" alt="SHST" style="height: 32px;">
+                    <span class="nav-logo-text">SAM HILL <span class="accent">ST</span></span>
+                </a>
+                <p>World-class mountain bike trail design and construction. Built by a champion, for every rider.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/samhill_signaturetrail/" target="_blank" rel="noopener" aria-label="SHST Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/samhill13/" target="_blank" rel="noopener" aria-label="Sam Hill Personal Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/woodland_trails_and_landscape/" target="_blank" rel="noopener" aria-label="Woodland Trails Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="sam-hill-signature-trail-website.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="services.html">Consultancy</a></li>
+                    <li><a href="services.html">Trail Design</a></li>
+                    <li><a href="services.html">Park Design</a></li>
+                    <li><a href="services.html">Construction</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="https://www.instagram.com/samhill_signaturetrail/" target="_blank" rel="noopener">@samhill_signaturetrail</a></li>
+                    <li><a href="https://www.instagram.com/samhill13/" target="_blank" rel="noopener">@samhill13</a></li>
+                    <li><a href="https://www.instagram.com/woodland_trails_and_landscape/" target="_blank" rel="noopener">@woodland_trails</a></li>
+                    <li><a href="mailto:info@samhillsignaturetrail.com.au">Email Us</a></li>
+                    <li><a href="https://samhillsignaturetrail.com.au" target="_blank" rel="noopener">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2024 Sam Hill Signature Trail. All rights reserved.</span>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+    </button>
+
+    <script>
+        // ===== LOADER =====
+        (function() {
+            const text = 'SAM HILL ST';
+            const container = document.getElementById('loaderText');
+            text.split('').forEach((char, i) => {
+                const span = document.createElement('span');
+                span.textContent = char === ' ' ? '\u00A0' : char;
+                span.style.animationDelay = `${i * 0.08}s`;
+                if (i >= 9) span.style.color = '#c8ff00';
+                container.appendChild(span);
+            });
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 2400);
+            document.body.style.overflow = 'hidden';
+        })();
+
+        // ===== CUSTOM CURSOR =====
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            dot.style.left = `${mouseX - 4}px`;
+            dot.style.top = `${mouseY - 4}px`;
+        });
+
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.15;
+            ringY += (mouseY - ringY) * 0.15;
+            ring.style.left = `${ringX - 20}px`;
+            ring.style.top = `${ringY - 20}px`;
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        // Hover effect on interactive elements
+        document.querySelectorAll('a, button, input, textarea, select').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+
+        // ===== NAV SCROLL =====
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ===== HAMBURGER =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        });
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // ===== SCROLL REVEAL =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+        // ===== BACK TO TOP =====
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('visible', window.scrollY > 600);
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+.DS_Store
+*.zip
+TENDER EXAMPLES/
+templates/
+scraped-content.json
